@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+
+	"time-tracker/database"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -18,11 +21,11 @@ func init() {
 }
 
 func main() {
-	db, err := connectDB()
+	db, err := database.Connect()
 	if err != nil {
 		log.Fatalf("Could not connect to the database: %v", err)
 	}
-	defer db.Close()
+	fmt.Println(db.Name())
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
